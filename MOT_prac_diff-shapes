@@ -1603,3 +1603,4 @@ if quitFinder and ('Darwin' in platform.system()): #If turned Finder (MacOS) off
         os.system(shellCmd)
 print('Got to the end of the program and now quitting normally.')
 core.quit()
+ 

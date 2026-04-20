@@ -26,8 +26,32 @@ from copy import deepcopy
 from math import atan, atan2, pi, cos, sin, sqrt, ceil, floor
 import time, random, sys, platform, os, gc, io, warnings
 import matplotlib.pyplot as plt
-import helpersAOH
-from helpersAOH import openMyStimWindow
+try:
+    import helpersAOH
+    from helpersAOH import openMyStimWindow
+except Exception as e:
+    print(f"Warning: Could not import helpersAOH - {e}")
+
+    class _HelpersFallback:
+        @staticmethod
+        def accelerateComputer(*args, **kwargs):
+            # Optional helper in the original lab environment; safe to skip when unavailable.
+            return None
+
+    def openMyStimWindow(mon, widthPixRequested, heightPixRequested, bgColor, allowGUI, units, fullscr, scrn, waitBlank, autoLogging):
+        return visual.Window(
+            size=(int(widthPixRequested), int(heightPixRequested)),
+            monitor=mon,
+            color=bgColor,
+            allowGUI=allowGUI,
+            units=units,
+            fullscr=bool(fullscr),
+            screen=int(scrn),
+            waitBlanking=bool(waitBlank),
+            autoLog=autoLogging,
+        )
+
+    helpersAOH = _HelpersFallback()
 try:
     import pylink #to turn off eyetracker graphics environment after eyetracker calibration. pylink comes from Eyelink Developers Kit download
 except Exception as e:
